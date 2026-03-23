@@ -1,0 +1,191 @@
+# JohanCarreño-post2-u3
+
+## Proyecto: Patrón Decorator y Facade en Java
+
+Implementación de los patrones de diseño **Decorator** y **Facade** siguiendo la estructura definida en la guía del curso, utilizando Spring Boot y pruebas con JUnit 5.
+
+---
+
+## Diagrama de composición (Decorator)
+
+Cliente
+→ ordenCompleto (bean)
+→ AuditoriaDecorator
+→ ValidacionDecorator
+→ LoggingDecorator
+→ OrdenServicioBase
+
+---
+
+## Pseudocódigo de composición en configuración
+
+@Bean("ordenBase")
+OrdenServicio ordenBase() = new OrdenServicioBase();
+
+@Bean("ordenCompleto")
+OrdenServicio ordenServicioCompleto(ordenBase) =
+new AuditoriaDecorator(
+new ValidacionDecorator(
+new LoggingDecorator(ordenBase)));
+
+---
+
+## Estructura principal
+
+* **OrdenServicio**: Component (interface)
+* **OrdenServicioBase**: ConcreteComponent
+* **OrdenServicioDecorator**: Decorator abstracto
+* **LoggingDecorator**: ConcreteDecorator
+* **ValidacionDecorator**: ConcreteDecorator
+* **AuditoriaDecorator**: ConcreteDecorator
+* **DecoratorConfig**: configuración de la cadena
+* **NotificacionFacade**: fachada de notificaciones
+
+---
+
+## Patrón Decorator
+
+Permite agregar funcionalidades al servicio de órdenes sin modificar la clase base.
+
+Capas implementadas:
+
+* Logging → registra ejecución
+* Validación → valida datos de entrada
+* Auditoría → registra información de la operación
+
+Se aplica **composición en lugar de herencia**, permitiendo flexibilidad y escalabilidad.
+
+---
+
+## Patrón Facade
+
+Se implementa una fachada para simplificar el uso del subsistema de notificaciones.
+
+### Servicios internos:
+
+* EmailService
+* SMSService
+* PushService
+
+### Facade:
+
+* NotificacionFacade
+
+---
+
+## Justificación del uso de Facade
+
+**Sin Facade:**
+
+* El cliente debe manejar múltiples servicios
+* Se duplica lógica
+* Mayor acoplamiento
+
+**Con Facade:**
+
+* Una sola llamada para notificar
+* Menor complejidad
+* Mejor mantenimiento
+
+---
+
+## Checkpoints de verificación
+
+### Compilación
+
+Comando:
+
+```bash
+mvn clean compile
+```
+
+Esperado:
+
+```
+BUILD SUCCESS
+```
+
+---
+
+### Pruebas unitarias
+
+Comando:
+
+```bash
+mvn test
+```
+
+Esperado:
+
+* Todas las pruebas en verde
+* Validación de Decorator
+* Validación de excepciones
+* Funcionamiento del Facade
+
+---
+
+## Verificación funcional
+
+Las pruebas unitarias validan:
+
+* Ejecución correcta de la cadena de decoradores
+* Orden de ejecución: Auditoría → Validación → Logging → Base
+* Manejo de errores en validación
+* Funcionamiento del facade de notificaciones
+
+---
+
+## Cobertura de criterios de rúbrica
+
+### Aplicación del patrón
+
+* Separación clara de componentes
+* Uso de decorador abstracto
+* Implementación de decoradores concretos
+
+### Diseño orientado a objetos
+
+* Responsabilidades separadas
+* Validaciones implementadas
+* Bajo acoplamiento
+
+### Calidad y pruebas
+
+* Casos válidos e inválidos
+* Pruebas unitarias completas
+* Verificación de excepciones
+
+---
+
+## Demostración de uso
+
+El comportamiento del sistema se evidencia mediante:
+
+* Pruebas unitarias con JUnit 5
+* Salida en consola de la cadena de decoradores
+* Ejecución del facade de notificaciones
+
+---
+
+## Comandos útiles
+
+```bash
+mvn clean test
+mvn -q test
+```
+
+---
+
+## Evidencias (capturas)
+
+El proyecto incluye capturas de:
+
+* Ejecución de `mvn clean compile`
+* Resultado de `mvn test`
+* Repositorio en GitHub: https://github.com/Johan09CD/JohanCarre-o-post2-u3
+
+---
+
+## Autor
+
+Johan Carreño
